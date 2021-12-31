@@ -1,5 +1,10 @@
 # react-native-k-zxing
 
+```diff
+- Work In Progress
+```
+<span style="color:red">some *blue* text</span>.
+
 ## Getting started
 
 `$ npm install react-native-k-zxing --save`
