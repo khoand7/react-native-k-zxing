@@ -8,50 +8,29 @@
  * https://github.com/facebook/react-native
  */
 
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {Text, View, TextInput} from 'react-native';
 import KBarCodeView from 'react-native-k-zxing';
 
-export default class App extends Component<{}> {
-  state = {
-    status: 'starting',
-    message: '--'
-  };
-  /*
-  componentDidMount() {
-    KZxing.sampleMethod('Testing', 123, (message) => {
-      this.setState({
-        status: 'native callback received',
-        message
-      });
-    });
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      barCode: 'Test',
+    };
+    this._onReceiveBarCode = this._onReceiveBarCode.bind(this);
   }
-  */
+  _onReceiveBarCode(barCode) {
+    console.log('test4');
+    console.log(barCode);
+    this.setState({barCode: barCode});
+  }
   render() {
     return (
       <View>
-        <KBarCodeView></KBarCodeView>
-        <Text>You clicked times</Text>
+        <KBarCodeView onReceiveBarCode={this._onReceiveBarCode} />
+        <Text>{this.state.barCode}</Text>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

@@ -93,6 +93,7 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
         setupLayout(parentView);
 
         final KBarCodeFragment myFragment = new KBarCodeFragment();
+        myFragment.setReactContext(reactContext);
         FragmentActivity activity = (FragmentActivity) reactContext.getCurrentActivity();
         activity.getSupportFragmentManager()
                 .beginTransaction()
@@ -124,5 +125,16 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
                 View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY));
 
         view.layout(0, 0, width, height);
+    }
+
+    @Override
+    public Map getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.builder().put(
+                "topChange",
+                MapBuilder.of(
+                        "phasedRegistrationNames",
+                        MapBuilder.of("bubbled", "onChange")
+                )
+        ).build();
     }
 }

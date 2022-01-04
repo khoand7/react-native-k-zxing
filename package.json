@@ -1,6 +1,6 @@
 {
   "name": "react-native-k-zxing",
-  "title": "React Native K Zxing",
+  "title": "React Native K ZXing",
   "version": "1.0.0",
   "description": "TODO",
   "main": "index.js",
@@ -23,8 +23,8 @@
     "react-native"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "Khoa Nguyen",
+    "email": "khoand.uit@gmail.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",

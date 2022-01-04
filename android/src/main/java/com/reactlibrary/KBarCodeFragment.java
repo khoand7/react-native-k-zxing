@@ -28,6 +28,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.common.InputImage;
@@ -49,11 +53,18 @@ import java.util.concurrent.Executor;
 public class KBarCodeFragment extends Fragment {
 
     private static final String TAG = "KBarCodeFragment";
-    KBarCodeView barCodeView;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
     private Executor executor;
+    private ReactContext reactContext;
 
+    public ReactContext getReactContext() {
+        return reactContext;
+    }
+
+    public void setReactContext(ReactContext reactContext) {
+        this.reactContext = reactContext;
+    }
 
     public KBarCodeFragment() {
         // Required empty public constructor
@@ -70,7 +81,7 @@ public class KBarCodeFragment extends Fragment {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
                 bindPreview(cameraProvider);
             } catch (ExecutionException | InterruptedException e) {
-                // No errors need to be handled for this Future.
+                // No errors need to be handled.
                 // This should never be reached.
             }
         }, ContextCompat.getMainExecutor(getActivity()));
@@ -110,6 +121,7 @@ public class KBarCodeFragment extends Fragment {
                     bitmap = ImageConvertUtils.getInstance().getUpRightBitmap(image);
                     String result = scanQRImage(bitmap);
                     Log.d(TAG, result);
+                    onReceiveNativeEvent(result);
                 } catch (MlKitException e) {
                     Log.e(TAG, MlKitException.class.getName(), e);
                 }
@@ -147,6 +159,15 @@ public class KBarCodeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_k_bar_code, container, false);
+    }
+
+    public void onReceiveNativeEvent(String barCode) {
+        WritableMap event = Arguments.createMap();
+        event.putString("barCode", barCode);
+        ReactContext reactContext = getReactContext();
+        reactContext
+                .getJSModule(RCTEventEmitter.class)
+                .receiveEvent(getId(), "topChange", event);
     }
 
     class DirectExecutor implements Executor {
