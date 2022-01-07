@@ -1,7 +1,7 @@
 {
   "name": "react-native-k-zxing",
   "title": "React Native K ZXing",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TODO",
   "main": "index.js",
   "files": [
@@ -9,7 +9,9 @@
     "android",
     "index.js",
     "ios",
-    "react-native-k-zxing.podspec"
+    "react-native-k-zxing.podspec",
+    "k-bar-code-view.js",
+    "k-bar-code-view-manager.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
