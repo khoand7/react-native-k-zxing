@@ -9,7 +9,7 @@
  */
 
 import React, {Component} from 'react';
-import {Text, View, TextInput} from 'react-native';
+import {Text, View, PixelRatio} from 'react-native';
 import KBarCodeView from 'react-native-k-zxing';
 
 export default class App extends Component {
@@ -21,14 +21,21 @@ export default class App extends Component {
     this._onReceiveBarCode = this._onReceiveBarCode.bind(this);
   }
   _onReceiveBarCode(barCode) {
-    console.log('test4');
     console.log(barCode);
     this.setState({barCode: barCode});
   }
   render() {
     return (
       <View>
-        <KBarCodeView onReceiveBarCode={this._onReceiveBarCode} />
+        <KBarCodeView
+          style={{
+            // converts dpi to px, provide desired height
+            height: PixelRatio.getPixelSizeForLayoutSize(600),
+            // converts dpi to px, provide desired width
+            width: PixelRatio.getPixelSizeForLayoutSize(400),
+          }}
+          onReceiveBarCode={this._onReceiveBarCode}
+        />
         <Text>{this.state.barCode}</Text>
       </View>
     );

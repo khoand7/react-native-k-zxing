@@ -24,6 +24,8 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
     public final int COMMAND_CREATE = 1;
     private int propWidth;
     private int propHeight;
+    private int propRectWidth;
+    private int propRectHeight;
 
     ReactApplicationContext reactContext;
 
@@ -82,6 +84,17 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
 
         if (index == 1) {
             propHeight = value;
+        }
+    }
+
+    @ReactPropGroup(names = {"width", "height"}, customType = "Rectangle")
+    public void setRectangle(FrameLayout view, int index, Integer value) {
+        if (index == 0) {
+            propRectWidth = value;
+        }
+
+        if (index == 1) {
+            propRectHeight = value;
         }
     }
 

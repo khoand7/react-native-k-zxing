@@ -31,9 +31,9 @@ export const KBarCodeView = (props) => {
     <KBarCodeViewManager
       style={{
         // converts dpi to px, provide desired height
-        height: PixelRatio.getPixelSizeForLayoutSize(200),
+        height: PixelRatio.getPixelSizeForLayoutSize(600),
         // converts dpi to px, provide desired width
-        width: PixelRatio.getPixelSizeForLayoutSize(200)
+        width: PixelRatio.getPixelSizeForLayoutSize(400),
       }}
       ref={ref}
       onChange={_onChange}

@@ -15,6 +15,8 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
+import androidx.camera.core.UseCaseGroup;
+import androidx.camera.core.ViewPort;
 import androidx.camera.core.internal.utils.ImageUtil;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -23,8 +25,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.util.Log;
+import android.util.Rational;
 import android.util.Size;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,8 +59,10 @@ public class KBarCodeFragment extends Fragment {
     private static final String TAG = "KBarCodeFragment";
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
+    private PreviewView previewView2;
     private Executor executor;
     private ReactContext reactContext;
+    private static Reader reader = null;
 
     public ReactContext getReactContext() {
         return reactContext;
@@ -87,9 +93,17 @@ public class KBarCodeFragment extends Fragment {
         }, ContextCompat.getMainExecutor(getActivity()));
     }
 
+    @SuppressLint("UnsafeOptInUsageError")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
         previewView = getView().findViewById(R.id.previewView);
+
+        /*
+        previewView2 = getView().findViewById(R.id.previewView2);
+        Preview preview2 = new Preview.Builder()
+                .build();
+        preview2.setSurfaceProvider(previewView2.getSurfaceProvider());
+        */
 
         Preview preview = new Preview.Builder()
                 .build();
@@ -129,7 +143,23 @@ public class KBarCodeFragment extends Fragment {
             }
         });
 
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, imageAnalysis, preview);
+        int width = 2;
+        int height = 1;
+
+
+        ViewPort viewPort = new ViewPort.Builder(new Rational(width, height), Surface.ROTATION_0).build();
+
+        UseCaseGroup useCaseGroup = new UseCaseGroup.Builder()
+//                .addUseCase(preview2)
+                .addUseCase(imageAnalysis) //if you are using imageAnalysis
+                .setViewPort(viewPort)
+                .build();
+
+        cameraProvider.unbindAll();
+
+        cameraProvider.bindToLifecycle(this, cameraSelector, useCaseGroup);
+
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview);
 
     }
 
@@ -143,7 +173,11 @@ public class KBarCodeFragment extends Fragment {
         LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-        Reader reader = new MultiFormatReader();
+        //if (reader == null) {
+            reader = new MultiFormatReader();
+        //} else {
+        //    reader.reset();
+        //}
         try {
             Result result = reader.decode(bitmap);
             contents = result.getText();
