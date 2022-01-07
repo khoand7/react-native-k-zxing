@@ -30,7 +30,7 @@ export default class App extends Component {
         <KBarCodeView
           style={{
             // converts dpi to px, provide desired height
-            height: PixelRatio.getPixelSizeForLayoutSize(600),
+            height: PixelRatio.getPixelSizeForLayoutSize(400),
             // converts dpi to px, provide desired width
             width: PixelRatio.getPixelSizeForLayoutSize(400),
           }}

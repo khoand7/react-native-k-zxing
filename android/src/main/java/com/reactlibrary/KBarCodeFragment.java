@@ -173,11 +173,11 @@ public class KBarCodeFragment extends Fragment {
         LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-        //if (reader == null) {
+        if (reader == null) {
             reader = new MultiFormatReader();
-        //} else {
-        //    reader.reset();
-        //}
+        } else {
+            reader.reset();
+        }
         try {
             Result result = reader.decode(bitmap);
             contents = result.getText();
