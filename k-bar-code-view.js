@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { UIManager, findNodeHandle, PixelRatio } from 'react-native';
+import { UIManager, findNodeHandle } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { KBarCodeViewManager } from './k-bar-code-view-manager';
