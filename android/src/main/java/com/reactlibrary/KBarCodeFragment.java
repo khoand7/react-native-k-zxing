@@ -164,7 +164,7 @@ public class KBarCodeFragment extends Fragment {
     }
 
     public static String scanQRImage(Bitmap bMap) {
-        String contents = null;
+        String contents = "";
 
         int[] intArray = new int[bMap.getWidth()*bMap.getHeight()];
         //copy pixel data from the Bitmap into the 'intArray' array
