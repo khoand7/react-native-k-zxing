@@ -41,8 +41,11 @@ import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.common.internal.ImageConvertUtils;
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.Result;
@@ -181,8 +184,20 @@ public class KBarCodeFragment extends Fragment {
         try {
             Result result = reader.decode(bitmap);
             contents = result.getText();
-        }
-        catch (Exception e) {
+        } catch (NotFoundException e) {
+            Log.d("QrTest", "Try to revert the barcode color");
+            bitmap = new BinaryBitmap(new HybridBinarizer(source.invert()));
+            try {
+                Result result = reader.decode(bitmap);
+                contents = result.getText();
+            } catch (Exception subE) {
+                // do nothing
+            }
+        } catch (ChecksumException checksumException) {
+            Log.e("QrTest", "Error decoding barcode", checksumException);
+        } catch (FormatException formatException) {
+            Log.e("QrTest", "Error decoding barcode", formatException);
+        } catch (Exception e) {
             Log.e("QrTest", "Error decoding barcode", e);
         }
         return contents;
