@@ -82,6 +82,13 @@ public class KBarCodeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+
         executor = new DirectExecutor();
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
 
@@ -94,6 +101,18 @@ public class KBarCodeFragment extends Fragment {
                 // This should never be reached.
             }
         }, ContextCompat.getMainExecutor(getActivity()));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop");
     }
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -130,6 +149,7 @@ public class KBarCodeFragment extends Fragment {
         imageAnalysis.setAnalyzer(executor, new ImageAnalysis.Analyzer() {
             @Override
             public void analyze(@NonNull ImageProxy imageProxy) {
+                Log.d(TAG, "analyze");
                 int rotationDegrees = imageProxy.getImageInfo().getRotationDegrees();
                 @SuppressLint("UnsafeOptInUsageError") Image mediaImage = imageProxy.getImage();
                 InputImage image = InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());

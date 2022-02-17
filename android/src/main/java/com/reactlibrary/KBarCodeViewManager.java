@@ -3,6 +3,8 @@ package com.reactlibrary;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+
+import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +134,23 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
         // propWidth and propHeight coming from react-native props
         int width = propWidth;
         int height = propHeight;
+
+        if (width == 0 && height == 0) {
+            width = view.getWidth();
+            height = view.getHeight();
+            Log.d("Size1", String.valueOf(width));
+            Log.d("Size2", String.valueOf(height));
+
+            if (view.getHeight() != 0 && view.getWidth() != 0) {
+                // do nothing
+            } else if (view.getHeight() != 0) {
+                height = view.getHeight();
+                width = view.getHeight()*4/3;
+            } else if (view.getWidth() != 0) {
+                width = view.getWidth();
+                height = view.getWidth()*3/4;
+            }
+        }
 
         view.measure(
                 View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),

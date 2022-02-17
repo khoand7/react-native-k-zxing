@@ -30,6 +30,7 @@ export const KBarCodeView = (props) => {
   return (
     <KBarCodeViewManager
       style={{
+        flex: 1,
         // converts dpi to px, provide desired height
         height: props.style.height,
         // converts dpi to px, provide desired width
