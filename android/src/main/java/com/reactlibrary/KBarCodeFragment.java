@@ -199,7 +199,8 @@ public class KBarCodeFragment extends Fragment {
         if (reader == null) {
             reader = new MultiFormatReader();
         } else {
-            reader.reset();
+            reader = null;
+            reader = new MultiFormatReader();
         }
         try {
             Result result = reader.decode(bitmap);
