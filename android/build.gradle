@@ -16,7 +16,7 @@ def DEFAULT_COMPILE_SDK_VERSION = 30
 def DEFAULT_BUILD_TOOLS_VERSION = '30.0.2'
 def DEFAULT_MIN_SDK_VERSION = 21
 def DEFAULT_TARGET_SDK_VERSION = 30
-def camerax_version = "1.0.1"
+def camerax_version = "1.1.0-beta02"
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -87,7 +87,7 @@ dependencies {
     // CameraX Lifecycle Library
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
-    implementation "androidx.camera:camera-view:1.0.0-alpha27"
+    implementation "androidx.camera:camera-view:$camerax_version"
     // ZXing
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.google.mlkit:vision-common:16.6.0'

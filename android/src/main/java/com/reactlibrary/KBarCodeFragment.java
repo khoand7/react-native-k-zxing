@@ -1,7 +1,5 @@
 package com.reactlibrary;
 
-import static androidx.camera.core.internal.utils.ImageUtil.imageToJpegByteArray;
-
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -82,12 +80,6 @@ public class KBarCodeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
 
         executor = new DirectExecutor();
         cameraProviderFuture = ProcessCameraProvider.getInstance(getActivity());
@@ -101,6 +93,12 @@ public class KBarCodeFragment extends Fragment {
                 // This should never be reached.
             }
         }, ContextCompat.getMainExecutor(getActivity()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
     }
 
     @Override

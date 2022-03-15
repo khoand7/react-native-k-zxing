@@ -138,8 +138,8 @@ public class KBarCodeViewManager extends ViewGroupManager<FrameLayout> {
         if (width == 0 && height == 0) {
             width = view.getWidth();
             height = view.getHeight();
-            Log.d("Size1", String.valueOf(width));
-            Log.d("Size2", String.valueOf(height));
+//            Log.d("Size1", String.valueOf(width));
+//            Log.d("Size2", String.valueOf(height));
 
             if (view.getHeight() != 0 && view.getWidth() != 0) {
                 // do nothing
